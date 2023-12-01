@@ -119,6 +119,17 @@ docker run -d -p3000:3000 -e SECRET_KEY=xxx -e SECRET_ID=yyy cgserver
 
 - REDIS_PWD：redis 服务密码，如果没有密码可为空
 
+- TRTC_SDKAPPID: 腾讯云音视频 SdkAppId
+- 
+- TRTC_SECRET_KEY: 腾讯云音视频 SecretKey
+
+- SUD_APPID: Sud AppId
+
+- SUD_APP_KEY: Sud App Key
+
+- SUD_APP_SECRET: Sud App Secret
+
+
 ## 接口请求类型
 
 - 请求方法：HTTP POST
