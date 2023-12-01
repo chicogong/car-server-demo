@@ -123,14 +123,15 @@ router.post('/StartProject', verifyReqParams, verifySign, async (req, res, next)
 
     // 初始化游戏 详细接口说明参照  (https://docs.sud.tech/zh-CN/app/Server/API/BulletAPI/BulletInit.html)
     const urls = JSON.parse(urlsRsp)
-    const initGameRsp = await InitGame(urls.bullet_api.init, {
-      mg_id: 'xxx',
+    const initGameReq = {
+      mg_id: 'xxxx',
       anchor_info: {
         uid: params.UserId,
         nick_name: `${params.UserId}_game`,
-        avatar_url: "xxx"
+        avatar_url: "https://imgcache.qq.com/qcloud/public/static/avatar3_100.20191230.png"
       }
-    })
+    }
+    const initGameRsp = await InitGame(urls.bullet_api.init, initGameReq)
 
     LOG.info(req.path,'initGame rsp:', initGameRsp)
     const initGameRspJson = JSON.parse(initGameRsp)
@@ -162,6 +163,13 @@ router.post('/StartProject', verifyReqParams, verifySign, async (req, res, next)
     }
     ret.RoomCode = roomCode;
     ret.UserSig = GenUserSig(params.UserId);
+
+    ret.MGId = initGameReq.mg_id;
+    ret.AnchorInfo = {
+      Uid: initGameReq.anchor_info.uid,
+      NickName: initGameReq.anchor_info.nick_name,
+      AvatarUrl: initGameReq.anchor_info.avatar_url
+    }
     simpleRespone(req, res, ret);
   } catch (e) {
     LOG.error(req.path, 'raise except:', e);
